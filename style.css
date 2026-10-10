@@ -13,8 +13,13 @@
     }
 
     * { box-sizing: border-box; }
-    body {
+    html, body {
       margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    body {
       min-width: 320px;
       min-height: 100vh;
       background:
@@ -76,6 +81,8 @@
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       gap: 18px;
       min-height: calc(100vh - 162px);
+      height: calc(100vh - 162px);
+      overflow: hidden;
     }
     .panel {
       min-width: 0;
@@ -170,7 +177,7 @@
       box-shadow: 0 0 0 4px rgba(245, 198, 108, .12), 0 0 20px rgba(245,198,108,.26);
       animation: none;
     }
-    .play-marker .marker-number { position: absolute; top: -5px; right: -4px; display: grid; width: 16px; height: 16px; place-items: center; border-radius: 50%; background: #24313c; color: #e8f3f4; font-size: 8px; font-weight: 700; }
+    .play-marker .marker-number { position: absolute; top: -5px; right: -4px; display: grid; width: 16px; height: 16px; place-items: center; border-radius: 50%; background: #24313c; color: #e8f3f4; font-size: 9px; font-weight: 700; }
     .marker-1 { top: 21%; left: 8%; }
     .marker-2 { top: 49%; right: 7%; }
     .marker-3 { top: 69%; left: 7%; }
@@ -217,7 +224,7 @@
     .sequence-item { min-width: 0; flex: 1; flex-direction: column; gap: 8px; opacity: .28; transform: translateY(8px) scale(.94); transition: opacity .42s ease, transform .42s ease; }
     .sequence-item.revealed { opacity: 1; transform: translateY(0) scale(1); }
     .sequence-item.current .number-box { border-color: rgba(96,216,204,.8); background: rgba(96,216,204,.16); color: #a4fff1; box-shadow: 0 0 22px rgba(96,216,204,.12); }
-    .number-box { display: grid; width: clamp(39px, 5vw, 54px); height: 45px; place-items: center; border: 1px solid rgba(96,216,204,.28); border-radius: 11px; background: rgba(96,216,204,.075); color: #d3e7e9; font: 700 15px "Manrope", sans-serif; transition: .35s; }
+    .number-box { display: grid; width: clamp(39px, 5vw, 54px); height: 45px; place-items: center; border: 1px solid rgba(96,216,204,.28); border-radius: 11px; background: rgba(96,216,204,.075); color: #dff6fa; font: 700 17px "Manrope", sans-serif; }
     .term-label { color: #7d8b9a; font-size: 9px; }
     .sequence-arrow { flex: 0 1 37px; min-width: 12px; margin-top: -14px; color: var(--amber); text-align: center; opacity: 0; transition: opacity .3s; }
     .sequence-arrow.visible { opacity: .9; }
@@ -250,6 +257,62 @@
     .legend span { display: inline-flex; align-items: center; gap: 6px; }
     .legend-mark { width: 7px; height: 7px; border-radius: 2px; background: var(--cyan); }
     .legend-mark.jump { background: var(--amber); }
+
+    /* LEFT COLUMN scrollbar */
+    .panel:first-child {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .panel:first-child .panel-heading {
+      flex-shrink: 0;
+    }
+    .panel:first-child .book-stage {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(96, 216, 204, .35) transparent;
+    }
+    .panel:first-child .book-stage::-webkit-scrollbar {
+      width: 7px;
+    }
+    .panel:first-child .book-stage::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .panel:first-child .book-stage::-webkit-scrollbar-thumb {
+      background: rgba(96, 216, 204, .35);
+      border-radius: 999px;
+    }
+    .panel:first-child .book-stage::-webkit-scrollbar-thumb:hover {
+      background: rgba(96, 216, 204, .5);
+    }
+
+    /* RIGHT COLUMN fixed viewport */
+    .panel.playground {
+      height: 100%;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .panel.playground .playground-content {
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    /* Play buttons anchored to each card */
+    .book-section {
+      position: relative;
+    }
+    .play-marker {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      z-index: 5;
+    }
+
     @media (max-width: 900px) {
       .app-shell { padding: 0 18px 22px; }
       .workspace { grid-template-columns: 1fr 1fr; gap: 12px; }
