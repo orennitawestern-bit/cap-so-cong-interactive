@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1017">
+  <title>Sách Toán tương tác · Cấp số cộng</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">∑</div>
+        <div>
+          <div class="brand-name">MATHSPACE</div>
+          <div class="brand-sub">Sách giáo khoa tương tác</div>
+        </div>
+      </div>
+      <div class="top-actions">
+        <span class="top-chip"><span class="dot"></span>Bài học tương tác</span>
+        <span class="top-chip">TOÁN 11&nbsp; · &nbsp;KẾT NỐI TRI THỨC</span>
+      </div>
+    </header>
+
+    <div class="chapter-meta">
+      <div>
+        <div class="breadcrumb">Đại số &amp; Giải tích <span>/</span> Dãy số <span>/</span> Bài 3</div>
+        <h1>Cấp số cộng</h1>
+      </div>
+      <span class="lesson-tag">CHƯƠNG 2&nbsp; · &nbsp;BÀI 3</span>
+    </div>
+
+    <main class="workspace">
+      <section class="panel" aria-labelledby="book-heading">
+        <header class="panel-heading">
+          <div>
+            <div class="panel-title"><span class="panel-icon" aria-hidden="true">▤</span><span id="book-heading">Sách số</span></div>
+            <div class="panel-subtitle">Chọn nút phát tại nội dung muốn khám phá</div>
+          </div>
+          <div class="book-tools">
+            <button class="tool-button" id="zoom-out" type="button" aria-label="Thu nhỏ trang sách">−</button>
+            <button class="tool-button" id="zoom-in" type="button" aria-label="Phóng to trang sách">+</button>
+            <button class="tool-button" id="pdf-toggle" type="button" title="Thay trang minh họa bằng PDF thật">PDF&nbsp; ↗</button>
+          </div>
+        </header>
+        <div class="book-stage" id="book-stage">
+          <!-- Trang sách minh họa: thay phần tử .book-page bằng <object data="assets/cap-so-cong.pdf" type="application/pdf">...</object> để nhúng PDF thật. -->
+          <article class="book-page" id="book-page" aria-label="Trang sách minh họa bài Cấp số cộng">
+            <div class="page-topline"><span>Đại số và giải tích · Toán 11</span><span>2.3</span></div>
+            <div class="book-kicker">Bài 3 · Dãy số</div>
+            <h2 class="book-title">CẤP SỐ CỘNG</h2>
+            <div class="book-section">
+              <h3>1. Định nghĩa</h3>
+              <p>Dãy số <i>(u<sub>n</sub>)</i> là một cấp số cộng khi mỗi số hạng, kể từ số hạng thứ hai, bằng số hạng đứng ngay trước nó cộng với một số không đổi.</p>
+              <div class="book-equation">u<sub>n</sub> = u<sub>n−1</sub> + d &nbsp; (n ≥ 2)</div>
+              <div class="book-rule"><strong>d</strong> được gọi là công sai của cấp số cộng.</div>
+            </div>
+            <div class="book-section">
+              <h3>Ví dụ 1</h3>
+              <p>Cho cấp số cộng (u<sub>n</sub>) có u<sub>1</sub> = 2, d = 3. Viết năm số hạng đầu.</p>
+              <div class="book-example">u<sub>1</sub> = 2 &nbsp;→&nbsp; u<sub>2</sub> = 5 &nbsp;→&nbsp; u<sub>3</sub> = 8<br>u<sub>4</sub> = 11 &nbsp;→&nbsp; u<sub>5</sub> = 14</div>
+            </div>
+            <div class="book-section">
+              <h3>Ví dụ 2</h3>
+              <p>Cho u<sub>n</sub> = 5n − 1. Chứng minh dãy là cấp số cộng, tìm u<sub>1</sub> và d.</p>
+              <div class="book-example">u<sub>n</sub> − u<sub>n−1</sub> = 5 &nbsp;→&nbsp; d = 5, &nbsp;u<sub>1</sub> = 4</div>
+            </div>
+            <div class="book-section">
+              <h3>Luyện tập 1</h3>
+              <p>Cho dãy số u<sub>n</sub> = −2n + 3. Tìm số hạng đầu và công sai.</p>
+            </div>
+            <div class="page-footer"><span>KẾT NỐI TRI THỨC VỚI CUỘC SỐNG</span><span>42</span></div>
+          </article>
+          <button class="play-marker marker-1" type="button" data-lesson="definition" aria-label="Phát minh họa: Định nghĩa cấp số cộng">
+            <span aria-hidden="true">▶</span><span class="marker-number">1</span>
+          </button>
+          <button class="play-marker marker-2" type="button" data-lesson="example1" aria-label="Phát minh họa: Ví dụ 1">
+            <span aria-hidden="true">▶</span><span class="marker-number">2</span>
+          </button>
+          <button class="play-marker marker-3" type="button" data-lesson="example2" aria-label="Phát minh họa: Ví dụ 2">
+            <span aria-hidden="true">▶</span><span class="marker-number">3</span>
+          </button>
+          <button class="play-marker marker-4" type="button" data-lesson="practice" aria-label="Phát minh họa: Luyện tập 1">
+            <span aria-hidden="true">▶</span><span class="marker-number">4</span>
+          </button>
+          <div class="reader-hint">Trang minh họa · 42</div>
+        </div>
+      </section>
+
+      <section class="panel playground" aria-labelledby="playground-heading">
+        <header class="panel-heading">
+          <div class="panel-title"><span class="panel-icon" aria-hidden="true">⌁</span><span id="playground-heading">Không gian minh họa</span></div>
+          <span class="panel-subtitle">VISUAL PLAYGROUND</span>
+        </header>
+        <div class="playground-content">
+          <div class="empty-state" id="empty-state">
+            <div class="empty-symbol" aria-hidden="true">u<sub style="font-size:.55em">n</sub></div>
+            <h2>Toán học, theo cách trực quan</h2>
+            <p>Chọn một nút Play bên trang sách để bắt đầu xem minh họa và bài giải từng bước.</p>
+            <span class="empty-hint">◉ &nbsp;4 nội dung tương tác có sẵn</span>
+          </div>
+          <div class="lesson-view" id="lesson-view" aria-live="polite">
+            <div class="lesson-eyebrow"><span class="live-dot"></span><span id="lesson-eyebrow">MINH HỌA TƯƠNG TÁC</span></div>
+            <h2 class="lesson-title" id="lesson-title"></h2>
+            <p class="lesson-prompt" id="lesson-prompt"></p>
+            <div class="viz-card">
+              <div class="viz-header"><span id="viz-caption">Các số hạng của dãy</span><span id="viz-counter">0 / 5 số hạng</span></div>
+              <div class="sequence-track">
+                <div class="sequence-items" id="sequence-items"></div>
+              </div>
+              <div class="step-progress"><div class="step-progress-fill" id="progress-fill"></div></div>
+            </div>
+            <div class="legend"><span><i class="legend-mark"></i>Số hạng đã tìm</span><span><i class="legend-mark jump"></i><span id="legend-jump">Mỗi bước cộng d</span></span></div>
+            <div class="lesson-lower">
+              <article class="explanation-card">
+                <div class="card-label">Lời giải từng bước</div>
+                <div class="step-heading"><span class="step-index" id="step-index">—</span><span id="step-title">Sẵn sàng bắt đầu</span></div>
+                <p class="step-copy" id="step-copy">Nhấn Play để xem diễn tiến của lời giải.</p>
+              </article>
+              <article class="formula-card">
+                <div class="card-label">Công thức</div>
+                <div>
+                  <div class="math-line" id="math-line">u<sub>n</sub> = u<sub>n−1</sub> + d</div>
+                  <div class="formula-note" id="formula-note">Hiệu hai số hạng liên tiếp luôn không đổi.</div>
+                </div>
+              </article>
+            </div>
+            <div class="controls-bar">
+              <div class="player-status"><span class="live-dot"></span><span id="player-status">Sẵn sàng</span></div>
+              <div class="play-controls">
+                <button class="control-button" id="step-button" type="button" aria-label="Xem bước tiếp theo">⇥&nbsp; Từng bước</button>
+                <button class="control-button" id="replay-button" type="button" aria-label="Phát lại minh họa">↻&nbsp; Phát lại</button>
+                <button class="control-button primary" id="play-button" type="button" aria-label="Tạm dừng minh họa">Ⅱ&nbsp; Tạm dừng</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
