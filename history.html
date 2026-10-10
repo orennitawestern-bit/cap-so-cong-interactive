@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch sử Cấp số cộng - Toán Học Trực Quan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --dark-bg: #0b1017;
+            --darker-bg: #0d1117;
+            --accent-cyan: #00d4ff;
+            --accent-gold: #ffd700;
+            --text-light: #e0e0e0;
+            --text-muted: #8b92a0;
+            --card-bg: rgba(20, 30, 48, 0.7);
+            --gradient-blue: linear-gradient(135deg, #0066cc, #00d4ff);
+            --gradient-gold: linear-gradient(135deg, #ffaa00, #ffd700);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ==================== NAVBAR ==================== */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 2rem;
+            background: linear-gradient(180deg, var(--darker-bg) 0%, rgba(13, 17, 23, 0.95) 100%);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-symbol {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-cyan);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-gold));
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .cta-button {
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-gold));
+            color: var(--darker-bg);
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem;
+            }
+            .nav-menu {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+            .cta-button {
+                padding: 0.6rem 1rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* ==================== SCROLL REVEAL ==================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* ==================== HERO SECTION ==================== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            margin-top: 60px;
+            background: radial-gradient(ellipse at 50% 50%, rgba(0, 102, 204, 0.1) 0%, transparent 70%),
+                        linear-gradient(180deg, var(--dark-bg) 0%, var(--darker-bg) 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.05) 0%, transparent 70%);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(-50%, -50%); }
+            50% { transform: translate(-50%, -60%); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 900px;
+            padding: 2rem;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-gold), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+            animation: glow-pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes glow-pulse {
+            0%, 100% {
+                text-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+            }
+            50% {
+                text-shadow: 0 0 40px rgba(0, 212, 255, 0.6);
+            }
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .bounce-arrow {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            animation: bounce 2s ease-in-out infinite;
+            color: var(--accent-cyan);
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-20px); }
+        }
+
+        .scroll-text {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 1rem;
+            letter-spacing: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                min-height: auto;
+                padding-top: 100px;
+            }
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+        }
+
+        /* ==================== CONTENT SECTIONS ==================== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 0;
+        }
+
+        section:nth-child(odd) {
+            background: radial-gradient(ellipse at 50% 50%, rgba(0, 102, 204, 0.08) 0%, transparent 70%);
+        }
+
+        section:nth-child(even) {
+            background: radial-gradient(ellipse at 50% 50%, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
+        }
+
+        .section-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            width: 100%;
+        }
+
+        .section-content.center {
+            grid-template-columns: 1fr;
+            text-align: center;
+        }
+
+        .section-text h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .timeline-badge {
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(255, 215, 0, 0.2));
+            border: 2px solid var(--accent-cyan);
+            border-radius: 50px;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+            font-size: 0.95rem;
+        }
+
+        .section-text p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .section-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .visual-card {
+            background: var(--card-bg);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 15px;
+            padding: 3rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .visual-card:hover {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.3);
+            transform: translateY(-10px);
+        }
+
+        @media (max-width: 768px) {
+            .section-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .section-text h2 {
+                font-size: 2rem;
+            }
+            section {
+                padding: 3rem 0;
+                min-height: auto;
+            }
+        }
+
+        /* ==================== HISTORIANS GRID ==================== */
+        .historians-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            width: 100%;
+            margin-top: 3rem;
+        }
+
+        .historian-card {
+            background: var(--card-bg);
+            border: 2px solid rgba(0, 212, 255, 0.2);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+        }
+
+        .historian-card:hover {
+            border-color: var(--accent-cyan);
+            transform: translateY(-15px);
+            box-shadow: 0 12px 40px rgba(0, 212, 255, 0.2);
+        }
+
+        .historian-avatar {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-gold));
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.4);
+        }
+
+        .historian-name {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--accent-cyan);
+        }
+
+        .historian-contribution {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* ==================== GAUSS INTERACTIVE ==================== */
+        .gauss-visual {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            align-items: center;
+            width: 100%;
+        }
+
+        .number-pairs {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            width: 100%;
+            margin: 2rem 0;
+        }
+
+        .pair-box {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(255, 215, 0, 0.1));
+            border: 2px solid var(--accent-cyan);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            font-weight: bold;
+            transition: all 0.4s ease;
+            animation: slideIn 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        .pair-box:nth-child(1) { animation-delay: 0s; }
+        .pair-box:nth-child(2) { animation-delay: 0.1s; }
+        .pair-box:nth-child(3) { animation-delay: 0.2s; }
+        .pair-box:nth-child(4) { animation-delay: 0.3s; }
+        .pair-box:nth-child(5) { animation-delay: 0.4s; }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+        }
+
+        .pair-box:hover {
+            border-color: var(--accent-gold);
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(0, 212, 255, 0.2));
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .pair-number {
+            font-size: 1.2rem;
+            color: var(--accent-cyan);
+        }
+
+        .pair-result {
+            font-size: 0.9rem;
+            color: var(--accent-gold);
+            margin-top: 0.5rem;
+        }
+
+        .gauss-result {
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 2rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(255, 215, 0, 0.1));
+            border: 3px solid var(--accent-gold);
+            border-radius: 15px;
+            color: var(--accent-gold);
+            animation: glow-pulse 2s ease-in-out infinite;
+        }
+
+        /* ==================== FOOTER ==================== */
+        .footer {
+            background: linear-gradient(180deg, var(--darker-bg) 0%, rgba(0, 0, 0, 0.5) 100%);
+            padding: 4rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(0, 212, 255, 0.1);
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-message {
+            font-size: 1.3rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .footer-cta {
+            display: inline-block;
+            padding: 1.2rem 2.5rem;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-gold));
+            color: var(--darker-bg);
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.4);
+        }
+
+        .footer-cta:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 50px rgba(0, 212, 255, 0.6);
+        }
+
+        .footer-bottom {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 212, 255, 0.1);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* ==================== CANVAS ANIMATION ==================== */
+        canvas {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 1024px) {
+            .historians-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1.5rem;
+            }
+            .number-pairs {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .number-pairs {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.8rem;
+            }
+            .pair-box {
+                padding: 1rem;
+                font-size: 0.85rem;
+            }
+            .footer-cta {
+                padding: 0.9rem 1.8rem;
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ==================== NAVBAR ==================== -->
+    <nav>
+        <div class="logo">
+            <span class="logo-symbol">∑</span>
+            <span>Toán Học Trực Quan</span>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="#hero" class="nav-link">LỊCH SỬ</a></li>
+            <li><a href="index.html" class="cta-button">BÀI HỌC TƯƠNG TÁC →</a></li>
+        </ul>
+    </nav>
+
+    <!-- ==================== HERO SECTION ==================== -->
+    <section id="hero" class="hero">
+        <div class="hero-content reveal">
+            <h1 class="hero-title">Quy luật tiềm ẩn của tự nhiên</h1>
+            <p class="hero-subtitle">
+                Từ hàng ngàn năm trước, người ta đã có những hình dung đầu tiên về cấp số trong cuộc sống: 
+                như số cánh hoa hướng dương, vảy quả dứa, hay quỹ đạo nảy của một quả bóng...
+                <br><br>
+                Tất cả những chuyển động và trật tự này đều tuân theo những bước nhảy của cấp số.
+            </p>
+            <p class="scroll-text">↓ CUỘN ĐỂ KHÁM PHÁ ↓</p>
+        </div>
+        <div class="bounce-arrow">⬇</div>
+    </section>
+
+    <!-- ==================== SECTION 1: CỔ ĐẠI AI CẬP ==================== -->
+    <section class="reveal">
+        <div class="container">
+            <div class="section-content">
+                <div class="section-text reveal-left">
+                    <div class="timeline-badge">1550 TCN</div>
+                    <h2>Cổ Đại Ai Cập</h2>
+                    <h3 style="color: var(--accent-gold); font-size: 1.3rem; margin-bottom: 1rem;">Bản Thảo Rhind</h3>
+                    <p>
+                        Cấp số cộng lần đầu tiên được tìm thấy trong Cuộn giấy Papyrus Rhind 
+                        (Ahmes Papyrus) có niên đại vào năm <strong>1550 TCN</strong>. 
+                    </p>
+                    <p>
+                        Tuy nhiên, tên gọi cho các khái niệm này đã mất nhiều thời gian hơn để ra đời. 
+                        Khi đó, chưa có bất kỳ quy chuẩn chung nào về cách gọi—ngay cả thuật ngữ "cấp số" 
+                        cũng chưa phải là một định danh chuẩn mực.
+                    </p>
+                    <p>
+                        Những nền văn minh cổ đại này đã sử dụng những dãy số cộng để giải quyết 
+                        các bài toán về chia đất, tính lương công nhân, và quản lý tài nguyên.
+                    </p>
+                </div>
+                <div class="section-visual reveal-right">
+                    <div class="visual-card">
+                        <canvas id="papyrus-canvas" width="400" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SECTION 2: HY LẠP CỔ ĐẠI ==================== -->
+    <section class="reveal">
+        <div class="container">
+            <div class="section-content center">
+                <div class="section-text reveal">
+                    <div class="timeline-badge">Thế kỷ V TCN</div>
+                    <h2>Hy Lạp Cổ Đại</h2>
+                    <h3 style="color: var(--accent-cyan); font-size: 1.3rem; margin-bottom: 1rem;">
+                        Các Triết Gia & Nhà Toán Học
+                    </h3>
+                    <p>
+                        Khoảng thế kỷ 5 TCN, các nhà toán học Hy Lạp bắt đầu đặt ra những quy tắc cụ thể 
+                        cho những cấp số này. Tiêu biểu là trường phái <strong>Pythagoras</strong>, 
+                        <strong>Archimedes</strong>, <strong>Hypsicles</strong>, và <strong>Diophantus</strong>.
+                    </p>
+                    <p>
+                        Họ không chỉ khám phá ra các tính chất của cấp số, mà còn ứng dụng chúng vào 
+                        nhiều lĩnh vực: từ âm nhạc, hình học, cho đến thiên văn học. Đây là bước ngoặt 
+                        quan trọng trong lịch sử toán học.
+                    </p>
+                </div>
+            </div>
+            <div class="historians-grid" style="margin-top: 3rem;">
+                <div class="historian-card reveal">
+                    <div class="historian-avatar">Π</div>
+                    <div class="historian-name">Pythagoras</div>
+                    <div class="historian-contribution">
+                        Khái niệm về số hình học và trung bình cộng. Phát triển các mối quan hệ số học trong âm nhạc.
+                    </div>
+                </div>
+                <div class="historian-card reveal">
+                    <div class="historian-avatar">Ⓐ</div>
+                    <div class="historian-name">Archimedes</div>
+                    <div class="historian-contribution">
+                        Ứng dụng tổng dãy số vào phương pháp vét cạn. Tính toán diện tích và thể tích.
+                    </div>
+                </div>
+                <div class="historian-card reveal">
+                    <div class="historian-avatar">Σ</div>
+                    <div class="historian-name">Hypsicles</div>
+                    <div class="historian-contribution">
+                        Giải quyết các bài toán về cấp số số học. Sử dụng trong thiên văn học.
+                    </div>
+                </div>
+                <div class="historian-card reveal">
+                    <div class="historian-avatar">◇</div>
+                    <div class="historian-name">Diophantus</div>
+                    <div class="historian-contribution">
+                        Giải phương trình Diophantine. Phát triển đại số và lý thuyết số học.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SECTION 3: CARL FRIEDRICH GAUSS ==================== -->
+    <section class="reveal">
+        <div class="container">
+            <div class="section-content">
+                <div class="section-visual reveal-left">
+                    <div class="visual-card">
+                        <div class="gauss-visual">
+                            <h3 style="color: var(--accent-gold); font-size: 1.5rem; text-align: center;">
+                                Phương Pháp Ghép Cặp của Gauss
+                            </h3>
+                            <div class="number-pairs">
+                                <div class="pair-box">
+                                    <div class="pair-number">1 + 100</div>
+                                    <div class="pair-result">= 101</div>
+                                </div>
+                                <div class="pair-box">
+                                    <div class="pair-number">2 + 99</div>
+                                    <div class="pair-result">= 101</div>
+                                </div>
+                                <div class="pair-box">
+                                    <div class="pair-number">3 + 98</div>
+                                    <div class="pair-result">= 101</div>
+                                </div>
+                                <div class="pair-box">
+                                    <div class="pair-number">...</div>
+                                    <div class="pair-result">...</div>
+                                </div>
+                                <div class="pair-box">
+                                    <div class="pair-number">50 + 51</div>
+                                    <div class="pair-result">= 101</div>
+                                </div>
+                            </div>
+                            <div class="gauss-result">
+                                50 cặp × 101 = <strong>5050</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-text reveal-right">
+                    <div class="timeline-badge">Năm 1780s</div>
+                    <h2>Johann Carl Friedrich Gauss</h2>
+                    <h3 style="color: var(--accent-gold); font-size: 1.3rem; margin-bottom: 1rem;">
+                        "Cha Đẻ" của Tổng Cấp Số Cộng
+                    </h3>
+                    <p>
+                        Khi mới chỉ là một cậu bé học sinh tiểu học (khoảng 7-10 tuổi), 
+                        thầy giáo của Gauss đã ra đề bài nhằm phạt cả lớp ngồi yên:
+                    </p>
+                    <p style="font-style: italic; color: var(--accent-cyan);">
+                        <strong>"Tính tổng các số nguyên liên tiếp từ 1 đến 100."</strong>
+                    </p>
+                    <p>
+                        Trong khi cả lớp loay hoay với phép cộng dài dòng, Gauss đã tìm ra quy luật 
+                        ghép cặp đối xứng và tính ngay ra kết quả <strong>5050</strong> chỉ trong tích tắc!
+                    </p>
+                    <p>
+                        Phương pháp này trở thành công thức chuẩn tắc cho tổng cấp số cộng: 
+                        <strong>S<sub>n</sub> = n(a₁ + aₙ)/2</strong>, thay đổi hoàn toàn cách chúng ta 
+                        làm việc với các dãy số.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER / CTA ==================== -->
+    <section class="footer">
+        <div class="footer-content reveal">
+            <h2 style="font-size: 2.2rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, var(--accent-cyan), var(--accent-gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                Từ Những Bước Đếm Sơ Khai
+            </h2>
+            <p class="footer-message">
+                ...đến nền tảng của toán học hiện đại.
+                <br><br>
+                Hãy khám phá sâu hơn về cấp số cộng qua các bài học tương tác và ứng dụng thực tế.
+            </p>
+            <a href="index.html" class="footer-cta">
+                Khám Phá Bài Học & Sách Giáo Khoa Tương Tác →
+            </a>
+            <div class="footer-bottom">
+                <p>© 2025 Toán Học Trực Quan | Khám Phá Lịch Sử Toán Học</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        /* ==================== INTERSECTION OBSERVER FOR SCROLL REVEAL ==================== */
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(element => {
+            observer.observe(element);
+        });
+
+        /* ==================== PAPYRUS CANVAS ANIMATION ==================== */
+        function drawPapyrusVisualization() {
+            const canvas = document.getElementById('papyrus-canvas');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+
+            // Clear canvas
+            ctx.fillStyle = 'rgba(13, 17, 23, 0.5)';
+            ctx.fillRect(0, 0, width, height);
+
+            // Draw papyrus texture
+            ctx.strokeStyle = 'rgba(0, 212, 255, 0.2)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < height; i += 15) {
+                ctx.beginPath();
+                ctx.moveTo(0, i);
+                ctx.lineTo(width, i);
+                ctx.stroke();
+            }
+
+            // Draw ancient number sequence: 2, 4, 6, 8, 10...
+            const numbers = [2, 4, 6, 8, 10, 12, 14, 16];
+            const spacing = width / (numbers.length + 1);
+            const startY = height / 2;
+
+            ctx.fillStyle = 'rgba(0, 212, 255, 0.8)';
+            ctx.font = 'bold 24px Arial';
+            ctx.textAlign = 'center';
+
+            numbers.forEach((num, idx) => {
+                const x = spacing * (idx + 1);
+                ctx.fillText(num, x, startY);
+                
+                // Draw connecting dots
+                ctx.fillStyle = 'rgba(255, 215, 0, 0.6)';
+                ctx.beginPath();
+                ctx.arc(x, startY + 40, 4, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Draw differences (d=2)
+                if (idx < numbers.length - 1) {
+                    const nextX = spacing * (idx + 2);
+                    ctx.strokeStyle = 'rgba(255, 215, 0, 0.4)';
+                    ctx.lineWidth = 2;
+                    ctx.setLineDash([5, 5]);
+                    ctx.beginPath();
+                    ctx.moveTo(x, startY + 40);
+                    ctx.lineTo(nextX, startY + 40);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                }
+                
+                ctx.fillStyle = 'rgba(0, 212, 255, 0.8)';
+            });
+
+            // Draw title
+            ctx.fillStyle = 'rgba(0, 212, 255, 0.9)';
+            ctx.font = 'bold 18px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Dãy số cộng: 2, 4, 6, 8, ... (d = 2)', width / 2, 30);
+
+            // Draw formula
+            ctx.font = 'italic 14px Arial';
+            ctx.fillStyle = 'rgba(255, 215, 0, 0.7)';
+            ctx.textAlign = 'center';
+            ctx.fillText('aₙ = a₁ + (n-1)d', width / 2, height - 15);
+        }
+
+        // Draw when page loads
+        window.addEventListener('load', drawPapyrusVisualization);
+        window.addEventListener('resize', drawPapyrusVisualization);
+
+        /* ==================== SMOOTH SCROLL ==================== */
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        /* ==================== NAVBAR SCROLL EFFECT ==================== */
+        let lastScrollTop = 0;
+        const nav = document.querySelector('nav');
+
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            if (scrollTop > 100) {
+                nav.style.boxShadow = '0 4px 20px rgba(0, 212, 255, 0.15)';
+            } else {
+                nav.style.boxShadow = 'none';
+            }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        });
+
+        /* ==================== HISTORIAN CARDS STAGGER ==================== */
+        const historianCards = document.querySelectorAll('.historian-card');
+        historianCards.forEach((card, index) => {
+            card.style.setProperty('--delay', `${index * 0.15}s`);
+            card.style.animation = `slideIn 0.6s ease-out ${index * 0.15}s forwards`;
+            card.style.opacity = '0';
+        });
+    </script>
+</body>
+</html>
