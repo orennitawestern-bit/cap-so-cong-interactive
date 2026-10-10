@@ -1,18 +1,12 @@
-.root {
+:root {
   color-scheme: dark;
-  --bg: #f3f3f1;
-  --bg-deep: #eae9e5;
-  --panel: #1a2332;
-  --panel-strong: #111a2a;
-  --panel-soft: #1d2a39;
+  --bg: #0b1017;             /* Đưa nền ngoài về tối nếu muốn giao diện đồng bộ Dark Mode */
+  --text: #eaf2ff;            /* Đổi thành màu trắng ngà sáng */
+  --text-soft: #f0f4f8;       /* Trắng sáng */
+  --muted: #a6b7cb;           /* Đổi sang màu xám bạc sáng hơn, không bị chìm */
   --line: rgba(132, 145, 163, 0.22);
-  --muted: #8d98a8;
-  --text: #1a2330;
-  --text-soft: #f0f4f8;
   --cyan: #63d9cf;
-  --cyan-soft: rgba(99, 217, 207, 0.12);
   --amber: #f5c66c;
-  --radius: 18px;
 }
 
 * { box-sizing: border-box; }
