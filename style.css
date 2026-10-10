@@ -16,22 +16,34 @@
     body {
       margin: 0;
       min-width: 320px;
-      min-height: 100vh;
+      height: 100vh;
       background:
         radial-gradient(ellipse at 50% -25%, rgba(52, 103, 121, .16), transparent 48%),
         var(--bg);
       color: var(--text);
       font-family: "DM Sans", sans-serif;
+      overflow: hidden;
     }
     button { font: inherit; }
-    .app-shell { width: min(1600px, 100%); min-height: 100vh; margin: 0 auto; padding: 0 30px 28px; }
+    /* Fixed app-shell: flexbox column layout */
+    .app-shell { 
+      width: min(1600px, 100%); 
+      height: 100vh; 
+      margin: 0 auto; 
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
     .topbar {
       height: 78px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid var(--line);
       gap: 20px;
+      padding: 0 30px;
+      border-bottom: 1px solid var(--line);
+      flex-shrink: 0;
     }
     .brand, .brand-mark, .top-actions, .chapter-meta, .panel-heading, .panel-title,
     .book-tools, .play-controls, .player-status, .step-heading, .sequence-item,
@@ -64,21 +76,35 @@
       box-shadow: 0 0 10px rgba(96, 216, 204, .6);
       vertical-align: 1px;
     }
-    .chapter-meta { justify-content: space-between; gap: 20px; padding: 23px 2px 18px; }
+    /* Chapter meta: adjust padding and make flex-shrink 0 */
+    .chapter-meta { 
+      justify-content: space-between; 
+      gap: 20px; 
+      padding: 18px 30px 14px; 
+      flex-shrink: 0;
+      border-bottom: 1px solid var(--line);
+    }
     .breadcrumb { margin-bottom: 6px; color: var(--muted); font-size: 11px; }
     .breadcrumb span { margin: 0 7px; color: #556271; }
     h1, h2, h3, p { margin-top: 0; }
-    h1 { margin-bottom: 0; font: 800 clamp(20px, 2vw, 26px) "Manrope", sans-serif; letter-spacing: -.04em; }
+    h1 { margin-bottom: 0; font: 800 clamp(18px, 2vw, 24px) "Manrope", sans-serif; letter-spacing: -.04em; }
     .chapter-note { color: var(--muted); font-size: 12px; }
     .lesson-tag { color: var(--cyan); border-color: rgba(96, 216, 204, .2); background: var(--cyan-soft); }
+    /* Workspace: flex grow to fill remaining space */
     .workspace {
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       gap: 18px;
-      min-height: calc(100vh - 162px);
+      flex: 1;
+      min-height: 0;
+      padding: 18px 30px 28px;
+      overflow: hidden;
     }
+    /* Panel: flexbox column for split-pane layout */
     .panel {
       min-width: 0;
+      display: flex;
+      flex-direction: column;
       overflow: hidden;
       border: 1px solid var(--line);
       border-radius: var(--radius);
@@ -87,9 +113,12 @@
     }
     .panel-heading {
       min-height: 59px;
+      display: flex;
       justify-content: space-between;
+      align-items: center;
       padding: 0 19px;
       border-bottom: 1px solid var(--line);
+      flex-shrink: 0;
     }
     .panel-title { gap: 10px; font: 700 12px "Manrope", sans-serif; }
     .panel-icon { color: var(--cyan); font-size: 15px; }
@@ -106,22 +135,24 @@
       transition: border-color .2s, color .2s;
     }
     .tool-button:hover { color: var(--text); border-color: rgba(96, 216, 204, .42); }
+    /* Book stage: full flex height, no overflow */
     .book-stage {
       position: relative;
-      min-height: 585px;
-      height: calc(100% - 59px);
+      flex: 1;
+      min-height: 0;
       overflow: hidden;
-      padding: 22px clamp(20px, 3.2vw, 44px);
+      padding: 18px 20px;
       background:
         radial-gradient(ellipse at 48% 43%, rgba(73, 106, 115, .1), transparent 52%),
         #101721;
     }
     .book-page {
       position: relative;
-      width: min(100%, 530px);
-      min-height: 100%;
+      width: min(100%, 500px);
+      height: 100%;
+      min-height: 0;
       margin: 0 auto;
-      padding: clamp(28px, 4vw, 48px) clamp(24px, 4vw, 54px);
+      padding: 26px 24px;
       overflow: hidden;
       border: 1px solid rgba(255,255,255,.08);
       border-radius: 4px;
@@ -136,16 +167,16 @@
       position: absolute; top: 0; bottom: 0; left: 19px;
       width: 1px; content: ""; background: rgba(164, 148, 119, .2);
     }
-    .page-topline { display: flex; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid #d9d4c8; color: #77817f; font-size: 9px; letter-spacing: .09em; text-transform: uppercase; }
-    .book-kicker { margin: 25px 0 8px; color: #48736d; font-size: 10px; font-weight: 800; letter-spacing: .11em; text-transform: uppercase; }
-    .book-title { margin: 0 0 20px; color: #243a40; font-size: clamp(19px, 2vw, 25px); letter-spacing: -.04em; }
-    .book-section { position: relative; margin: 18px 0; padding: 14px 15px 13px; border: 1px solid #e3dfd4; border-radius: 9px; background: rgba(255,255,255,.45); }
-    .book-section h3 { margin-bottom: 7px; color: #4a716c; font-size: 11px; }
-    .book-section p { margin-bottom: 0; color: #4b5759; font: 11px/1.75 "DM Sans", sans-serif; }
-    .book-equation { margin: 10px 0; color: #294c51; font: 700 14px "Manrope", sans-serif; text-align: center; }
-    .book-rule { padding: 9px 12px; border-left: 3px solid #7da89e; background: #e9eee7; color: #35524f; font-size: 11px; line-height: 1.6; }
-    .book-example { margin-top: 8px; color: #485656; font: 10px/1.75 "DM Sans", sans-serif; }
-    .page-footer { position: absolute; right: 25px; bottom: 17px; left: 25px; display: flex; justify-content: space-between; color: #93998f; font-size: 9px; }
+    .page-topline { display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px solid #d9d4c8; color: #77817f; font-size: 8px; letter-spacing: .09em; text-transform: uppercase; }
+    .book-kicker { margin: 20px 0 6px; color: #48736d; font-size: 9px; font-weight: 800; letter-spacing: .11em; text-transform: uppercase; }
+    .book-title { margin: 0 0 16px; color: #243a40; font-size: clamp(18px, 2vw, 22px); letter-spacing: -.04em; }
+    .book-section { position: relative; margin: 14px 0; padding: 12px 13px; border: 1px solid #e3dfd4; border-radius: 8px; background: rgba(255,255,255,.45); }
+    .book-section h3 { margin: 0 0 6px; color: #4a716c; font-size: 10px; }
+    .book-section p { margin-bottom: 0; color: #4b5759; font: 10px/1.6 "DM Sans", sans-serif; }
+    .book-equation { margin: 8px 0; color: #294c51; font: 600 12px "Manrope", sans-serif; text-align: center; }
+    .book-rule { padding: 8px 10px; border-left: 3px solid #7da89e; background: #e9eee7; color: #35524f; font-size: 10px; line-height: 1.5; }
+    .book-example { margin-top: 6px; color: #485656; font: 9px/1.6 "DM Sans", sans-serif; }
+    .page-footer { position: absolute; right: 20px; bottom: 12px; left: 20px; display: flex; justify-content: space-between; color: #93998f; font-size: 8px; }
     .play-marker {
       position: absolute;
       z-index: 2;
@@ -170,7 +201,7 @@
       box-shadow: 0 0 0 4px rgba(245, 198, 108, .12), 0 0 20px rgba(245,198,108,.26);
       animation: none;
     }
-    .play-marker .marker-number { position: absolute; top: -5px; right: -4px; display: grid; width: 16px; height: 16px; place-items: center; border-radius: 50%; background: #24313c; color: #e8f3f4; font-size: 8px; font-weight: 700; }
+    .play-marker .marker-number { position: absolute; top: -5px; right: -4px; display: grid; width: 16px; height: 16px; place-items: center; border-radius: 50%; background: #24313c; color: #e8f3f4; font-size: 10px; font-weight: 700; }
     .marker-1 { top: 21%; left: 8%; }
     .marker-2 { top: 49%; right: 7%; }
     .marker-3 { top: 69%; left: 7%; }
@@ -178,9 +209,49 @@
     @keyframes soft-pulse { 0%,100% { box-shadow: 0 5px 15px rgba(0,0,0,.25), 0 0 0 0 rgba(96,216,204,0); } 50% { box-shadow: 0 5px 15px rgba(0,0,0,.25), 0 0 0 5px rgba(96,216,204,.08); } }
     .reader-hint { position: absolute; right: 15px; bottom: 11px; color: #8493a3; font-size: 9px; }
 
-    .playground { display: flex; min-height: 644px; flex-direction: column; }
-    .playground-content { display: flex; flex: 1; flex-direction: column; padding: 22px 23px 16px; }
-    .empty-state { display: flex; flex: 1; min-height: 520px; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+    /* Playground: right column with scrollable content */
+    .playground { 
+      display: flex; 
+      flex-direction: column;
+      overflow: hidden;
+    }
+    /* Playground content: scrollable area with custom scrollbar */
+    .playground-content { 
+      display: flex; 
+      flex: 1; 
+      flex-direction: column; 
+      padding: 18px 20px 14px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      min-height: 0;
+    }
+
+    /* Custom scrollbar for webkit browsers (Chrome, Safari, Edge) */
+    .playground-content::-webkit-scrollbar {
+      width: 7px;
+    }
+
+    .playground-content::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .playground-content::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      transition: background-color .2s ease;
+    }
+
+    .playground-content::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    /* Firefox scrollbar */
+    .playground-content {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+    }
+
+    .empty-state { display: flex; flex: 1; min-height: 480px; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
     .empty-state[hidden] { display: none; }
     .empty-symbol {
       display: grid; width: 92px; height: 92px; place-items: center;
@@ -198,98 +269,114 @@
     .lesson-view { display: none; flex: 1; flex-direction: column; }
     .lesson-view.visible { display: flex; }
     .lesson-eyebrow { gap: 7px; margin: 0 0 8px; color: var(--cyan); font-size: 9px; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; }
-    .lesson-title { margin: 0 0 6px; font: 800 clamp(18px, 2vw, 23px) "Manrope", sans-serif; letter-spacing: -.04em; }
-    .lesson-prompt { min-height: 33px; margin: 0 0 14px; color: #9aa8b6; font-size: 11px; line-height: 1.55; }
+    .lesson-title { margin: 0 0 6px; font: 800 clamp(17px, 2vw, 21px) "Manrope", sans-serif; letter-spacing: -.04em; }
+    .lesson-prompt { min-height: 32px; margin: 0 0 12px; color: #9aa8b6; font-size: 11px; line-height: 1.5; }
     .viz-card {
       position: relative;
-      min-height: 205px;
+      min-height: 185px;
       overflow: hidden;
       border: 1px solid var(--line);
-      border-radius: 14px;
+      border-radius: 12px;
       background:
         radial-gradient(ellipse at 50% 100%, rgba(96,216,204,.075), transparent 50%),
         #0e151e;
     }
-    .viz-header { display: flex; justify-content: space-between; padding: 13px 15px 0; color: #aebbc7; font-size: 9px; }
+    .viz-header { display: flex; justify-content: space-between; padding: 12px 14px 0; color: #aebbc7; font-size: 9px; }
     .viz-header span:last-child { color: #728191; }
-    .sequence-track { position: relative; display: flex; min-height: 135px; align-items: center; justify-content: center; padding: 24px 14px 14px; }
+    .sequence-track { position: relative; display: flex; min-height: 125px; align-items: center; justify-content: center; padding: 20px 12px 12px; }
     .sequence-items { display: flex; width: 100%; align-items: center; justify-content: center; }
-    .sequence-item { min-width: 0; flex: 1; flex-direction: column; gap: 8px; opacity: .28; transform: translateY(8px) scale(.94); transition: opacity .42s ease, transform .42s ease; }
+    .sequence-item { min-width: 0; flex: 1; flex-direction: column; gap: 6px; opacity: .28; transform: translateY(8px) scale(.94); transition: opacity .42s ease, transform .42s ease; }
     .sequence-item.revealed { opacity: 1; transform: translateY(0) scale(1); }
     .sequence-item.current .number-box { border-color: rgba(96,216,204,.8); background: rgba(96,216,204,.16); color: #a4fff1; box-shadow: 0 0 22px rgba(96,216,204,.12); }
-    .number-box { display: grid; width: clamp(39px, 5vw, 54px); height: 45px; place-items: center; border: 1px solid rgba(96,216,204,.28); border-radius: 11px; background: rgba(96,216,204,.075); color: #d3e7e9; font: 700 15px "Manrope", sans-serif; transition: .35s; }
-    .term-label { color: #7d8b9a; font-size: 9px; }
-    .sequence-arrow { flex: 0 1 37px; min-width: 12px; margin-top: -14px; color: var(--amber); text-align: center; opacity: 0; transition: opacity .3s; }
+    .number-box { display: grid; width: clamp(36px, 5vw, 48px); height: 40px; place-items: center; border: 1px solid rgba(96,216,204,.28); border-radius: 10px; background: rgba(96,216,204,.075); color: rgba(96,216,204,.8); font-size: 13px; font-weight: 600; }
+    .term-label { color: #7d8b9a; font-size: 8px; }
+    .sequence-arrow { flex: 0 1 32px; min-width: 10px; margin-top: -12px; color: var(--amber); text-align: center; opacity: 0; transition: opacity .3s; }
     .sequence-arrow.visible { opacity: .9; }
-    .sequence-arrow small { display: block; color: #d6b774; font-size: 8px; white-space: nowrap; }
+    .sequence-arrow small { display: block; color: #d6b774; font-size: 7px; white-space: nowrap; }
     .step-progress { height: 2px; background: #1b2732; }
     .step-progress-fill { width: 0; height: 100%; background: linear-gradient(90deg, var(--cyan), var(--amber)); transition: width .35s ease; }
-    .lesson-lower { display: grid; grid-template-columns: 1fr minmax(180px, .78fr); gap: 12px; margin-top: 13px; }
-    .explanation-card, .formula-card { min-width: 0; min-height: 131px; padding: 13px 14px; border: 1px solid var(--line); border-radius: 12px; background: rgba(18,27,38,.76); }
-    .card-label { margin-bottom: 10px; color: #91a0af; font-size: 9px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
-    .step-heading { gap: 7px; margin-bottom: 7px; color: #e7eef4; font-size: 11px; font-weight: 600; }
-    .step-index { display: grid; width: 19px; height: 19px; flex: 0 0 19px; place-items: center; border-radius: 6px; background: var(--cyan-soft); color: var(--cyan); font-size: 9px; }
-    .step-copy { min-height: 34px; margin: 0; color: #a6b2be; font-size: 10px; line-height: 1.65; }
-    .math-line { margin-bottom: 8px; color: #ebf3f6; font: 600 13px "Manrope", sans-serif; line-height: 1.5; overflow-wrap: anywhere; }
-    .formula-note { color: #8291a0; font-size: 9px; line-height: 1.55; }
-    .controls-bar { display: flex; min-height: 58px; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 13px; }
-    .player-status { gap: 7px; color: #96a5b3; font-size: 10px; }
+    .lesson-lower { display: grid; grid-template-columns: 1fr minmax(150px, .7fr); gap: 10px; margin-top: 12px; }
+    .explanation-card, .formula-card { min-width: 0; min-height: 110px; padding: 12px 13px; border: 1px solid var(--line); border-radius: 10px; background: rgba(18,27,38,.76); }
+    .card-label { margin-bottom: 8px; color: #91a0af; font-size: 8px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
+    .step-heading { gap: 6px; margin-bottom: 6px; color: #e7eef4; font-size: 10px; font-weight: 600; }
+    .step-index { display: grid; width: 18px; height: 18px; flex: 0 0 18px; place-items: center; border-radius: 5px; background: var(--cyan-soft); color: var(--cyan); font-size: 8px; }
+    .step-copy { min-height: 30px; margin: 0; color: #a6b2be; font-size: 9px; line-height: 1.55; }
+    .math-line { margin-bottom: 6px; color: #ebf3f6; font: 600 12px "Manrope", sans-serif; line-height: 1.4; overflow-wrap: anywhere; }
+    .formula-note { color: #8291a0; font-size: 8px; line-height: 1.5; }
+    .controls-bar { 
+      display: flex; 
+      min-height: 50px; 
+      align-items: center; 
+      justify-content: space-between; 
+      gap: 8px; 
+      margin-top: 12px; 
+      padding-top: 10px;
+      flex-shrink: 0;
+    }
+    .player-status { gap: 6px; color: #96a5b3; font-size: 9px; }
     .live-dot { width: 6px; height: 6px; margin: 0; }
-    .play-controls { gap: 7px; }
+    .play-controls { gap: 6px; }
     .control-button {
-      display: inline-flex; min-height: 32px; align-items: center; justify-content: center; gap: 6px;
-      padding: 0 10px; border: 1px solid var(--line); border-radius: 8px;
-      background: #17212d; color: #cbd6df; cursor: pointer; font-size: 10px;
+      display: inline-flex; min-height: 30px; align-items: center; justify-content: center; gap: 5px;
+      padding: 0 9px; border: 1px solid var(--line); border-radius: 7px;
+      background: #17212d; color: #cbd6df; cursor: pointer; font-size: 9px; white-space: nowrap;
       transition: background .18s, border-color .18s, color .18s;
     }
     .control-button:hover:not(:disabled) { border-color: rgba(96,216,204,.38); color: var(--cyan); }
     .control-button:disabled { opacity: .4; cursor: default; }
     .control-button.primary { border-color: rgba(96,216,204,.28); background: var(--cyan-soft); color: var(--cyan); }
     .control-button:focus-visible, .play-marker:focus-visible, .tool-button:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
-    .legend { justify-content: space-between; margin-top: 5px; color: #788797; font-size: 9px; }
-    .legend span { display: inline-flex; align-items: center; gap: 6px; }
-    .legend-mark { width: 7px; height: 7px; border-radius: 2px; background: var(--cyan); }
+    .legend { justify-content: space-between; margin-top: 4px; color: #788797; font-size: 8px; }
+    .legend span { display: inline-flex; align-items: center; gap: 5px; }
+    .legend-mark { width: 6px; height: 6px; border-radius: 2px; background: var(--cyan); }
     .legend-mark.jump { background: var(--amber); }
+    
     @media (max-width: 900px) {
-      .app-shell { padding: 0 18px 22px; }
-      .workspace { grid-template-columns: 1fr 1fr; gap: 12px; }
-      .book-stage { padding: 16px 14px; }
-      .book-page { padding: 26px 25px; }
+      .app-shell { padding: 0; }
+      .topbar { padding: 0 18px; }
+      .chapter-meta { padding: 16px 18px 12px; }
+      .workspace { grid-template-columns: 1fr 1fr; gap: 12px; padding: 12px 18px 18px; }
+      .book-stage { padding: 14px 12px; }
+      .book-page { width: min(100%, 420px); padding: 24px 20px; }
       .marker-1 { left: 3%; } .marker-2 { right: 2%; } .marker-3 { left: 2%; } .marker-4 { right: 3%; }
-      .playground-content { padding: 20px 16px 12px; }
+      .playground-content { padding: 16px 14px 10px; }
       .lesson-lower { grid-template-columns: 1fr; gap: 8px; }
       .explanation-card, .formula-card { min-height: auto; }
-      .formula-card { display: flex; align-items: center; gap: 12px; }
-      .formula-card .card-label { min-width: 62px; margin: 0; }
+      .formula-card { display: flex; align-items: center; gap: 10px; }
+      .formula-card .card-label { min-width: 55px; margin: 0; }
       .formula-note { display: none; }
     }
     @media (max-width: 660px) {
-      .app-shell { padding: 0 12px 18px; }
-      .topbar { height: 65px; }
+      .app-shell { padding: 0; }
+      .topbar { height: 64px; padding: 0 14px; }
       .top-chip { display: none; }
-      .chapter-meta { padding: 18px 2px 14px; }
+      .chapter-meta { padding: 14px 14px 12px; }
       .chapter-note { font-size: 10px; }
-      .lesson-tag { padding: 7px 9px; font-size: 9px; }
-      .workspace { grid-template-columns: 1fr; }
-      .book-stage { min-height: 515px; }
-      .book-page { width: min(100%, 440px); }
-      .playground { min-height: 580px; }
-      .empty-state { min-height: 460px; }
-      .lesson-lower { grid-template-columns: 1fr minmax(150px, .78fr); }
+      .lesson-tag { padding: 6px 8px; font-size: 9px; }
+      .workspace { grid-template-columns: 1fr; gap: 10px; padding: 10px 14px 16px; }
+      .book-stage { min-height: 460px; padding: 12px 10px; }
+      .book-page { width: min(100%, 380px); padding: 22px 18px; }
+      .playground { min-height: 520px; }
+      .empty-state { min-height: 420px; }
+      .lesson-lower { grid-template-columns: 1fr minmax(130px, .7fr); }
       .formula-card { display: block; }
-      .formula-card .card-label { margin-bottom: 9px; }
+      .formula-card .card-label { margin-bottom: 8px; }
       .formula-note { display: block; }
+      .playground-content { padding: 14px 12px 8px; }
     }
     @media (max-width: 390px) {
-      .app-shell { padding-right: 8px; padding-left: 8px; }
-      .book-stage { padding-right: 8px; padding-left: 8px; }
-      .book-page { padding-right: 19px; padding-left: 23px; }
+      .app-shell { padding: 0; }
+      .topbar { height: 60px; padding: 0 10px; }
+      .chapter-meta { padding: 12px 10px; }
+      .book-stage { padding: 10px 8px; }
+      .book-page { width: min(100%, 330px); padding: 18px 16px; }
       .lesson-lower { grid-template-columns: 1fr; }
-      .formula-card { display: flex; align-items: center; gap: 10px; }
+      .formula-card { display: flex; align-items: center; gap: 8px; }
       .formula-card .card-label { margin: 0; }
       .formula-note { display: none; }
-      .sequence-arrow { flex-basis: 25px; }
-      .number-box { width: 37px; height: 40px; font-size: 13px; }
+      .sequence-arrow { flex-basis: 22px; }
+      .number-box { width: 33px; height: 36px; font-size: 11px; }
+      .playground-content { padding: 12px 10px 6px; }
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
