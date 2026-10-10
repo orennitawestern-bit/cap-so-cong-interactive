@@ -180,7 +180,7 @@
     .page-topline { display: flex; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid #d9d4c8; color: #77817f; font-size: 9px; letter-spacing: .09em; text-transform: uppercase; }
     .book-kicker { margin: 25px 0 8px; color: #48736d; font-size: 10px; font-weight: 800; letter-spacing: .11em; text-transform: uppercase; }
     .book-title { margin: 0 0 20px; color: #243a40; font-size: clamp(19px, 2vw, 25px); letter-spacing: -.04em; }
-    .book-section { position: relative; margin: 18px 0; padding: 14px 15px 13px; border: 1px solid #e3dfd4; border-radius: 9px; background: rgba(255,255,255,.45); }
+    .book-section { position: relative; margin: 18px 0; padding: 14px 15px 13px 15px; border: 1px solid #e3dfd4; border-radius: 9px; background: rgba(255,255,255,.45); padding-right: 50px; }
     .book-section h3 { margin-bottom: 7px; color: #4a716c; font-size: 11px; }
     .book-section p { margin-bottom: 0; color: #4b5759; font: 11px/1.75 "DM Sans", sans-serif; }
     .book-equation { margin: 10px 0; color: #294c51; font: 700 14px "Manrope", sans-serif; text-align: center; }
@@ -201,10 +201,13 @@
       cursor: pointer;
       transition: transform .2s, border-color .2s, color .2s, background .2s, box-shadow .2s;
       animation: soft-pulse 3s ease-in-out infinite;
+      right: 6px;
+      top: 50%;
+      transform: translateY(-50%);
     }
-    .play-marker:hover { transform: scale(1.12); border-color: var(--cyan); color: var(--cyan); }
+    .play-marker:hover { transform: scale(1.12) translateY(-50%); border-color: var(--cyan); color: var(--cyan); }
     .play-marker.active {
-      transform: scale(1.08);
+      transform: scale(1.08) translateY(-50%);
       border-color: var(--amber);
       background: #30291b;
       color: var(--amber);
