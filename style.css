@@ -214,7 +214,7 @@
       box-shadow: 0 0 0 4px rgba(245, 198, 108, .12), 0 0 20px rgba(245,198,108,.26);
       animation: none;
     }
-    .play-marker .marker-number { position: absolute; top: -5px; right: -4px; display: grid; width: 16px; height: 16px; place-items: center; border-radius: 50%; background: #24313c; color: #e8f3f4; font-size: 8px; font-weight: 700; }
+    .play-marker .marker-number { position: absolute; top: -5px; right: -4px; display: grid; width: 16px; height: 16px; place-items: center; border-radius: 50%; background: #24313c; color: #e8f3f4; font-size: 9px; font-weight: 700; }
     .marker-1 { top: 21%; right: 7%; }
     .marker-2 { top: 49%; right: 7%; }
     .marker-3 { top: 69%; right: 7%; }
@@ -252,8 +252,31 @@
     .empty-state h2 { margin-bottom: 9px; font: 700 21px "Manrope", sans-serif; letter-spacing: -.04em; }
     .empty-state p { max-width: 300px; margin-bottom: 21px; color: var(--muted); font-size: 12px; line-height: 1.7; }
     .empty-hint { padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px; color: #9aa8b6; font-size: 10px; }
-    .lesson-view { display: none; flex: 1; flex-direction: column; min-height: 0; }
+    .lesson-view {
+      display: none;
+      flex: 1;
+      flex-direction: column;
+      min-height: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding-right: 6px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(96,216,204,.35) transparent;
+    }
     .lesson-view.visible { display: flex; }
+    .lesson-view::-webkit-scrollbar {
+      width: 7px;
+    }
+    .lesson-view::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .lesson-view::-webkit-scrollbar-thumb {
+      background: rgba(96, 216, 204, .35);
+      border-radius: 999px;
+    }
+    .lesson-view::-webkit-scrollbar-thumb:hover {
+      background: rgba(96, 216, 204, .5);
+    }
     .lesson-eyebrow { gap: 7px; margin: 0 0 4px; color: var(--cyan); font-size: 9px; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; }
     .lesson-title { margin: 0 0 3px; font: 800 clamp(18px, 2vw, 23px) "Manrope", sans-serif; letter-spacing: -.04em; }
     .lesson-prompt { min-height: 28px; margin: 0 0 8px; color: #9aa8b6; font-size: 11px; line-height: 1.55; }
@@ -274,7 +297,7 @@
     .sequence-item { min-width: 0; flex: 1; flex-direction: column; gap: 5px; opacity: .28; transform: translateY(8px) scale(.94); transition: opacity .42s ease, transform .42s ease; }
     .sequence-item.revealed { opacity: 1; transform: translateY(0) scale(1); }
     .sequence-item.current .number-box { border-color: rgba(96,216,204,.8); background: rgba(96,216,204,.16); color: #a4fff1; box-shadow: 0 0 22px rgba(96,216,204,.12); }
-    .number-box { display: grid; width: clamp(32px, 4vw, 45px); height: 38px; place-items: center; border: 1px solid rgba(96,216,204,.28); border-radius: 11px; background: rgba(96,216,204,.075); color: #aebbc7; font: 600 12px "Manrope", sans-serif; }
+    .number-box { display: grid; width: clamp(32px, 4vw, 45px); height: 38px; place-items: center; border: 1px solid rgba(96,216,204,.28); border-radius: 11px; background: rgba(96,216,204,.075); color: #eaf7f7; font: 700 clamp(11px, 1.3vw, 15px) "Manrope", sans-serif; }
     .term-label { color: #7d8b9a; font-size: 9px; }
     .sequence-arrow { flex: 0 1 37px; min-width: 12px; margin-top: -14px; color: var(--amber); text-align: center; opacity: 0; transition: opacity .3s; }
     .sequence-arrow.visible { opacity: .9; }
