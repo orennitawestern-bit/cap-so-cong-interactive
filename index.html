@@ -392,6 +392,9 @@
             backdrop-filter: blur(10px);
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .historian-card:hover {
@@ -411,6 +414,7 @@
             justify-content: center;
             font-size: 3rem;
             box-shadow: 0 0 30px rgba(0, 212, 255, 0.4);
+            flex-shrink: 0;
         }
 
         .historian-name {
@@ -426,7 +430,98 @@
             line-height: 1.6;
         }
 
-        /* ==================== GAUSS INTERACTIVE ==================== */
+        /* ==================== GAUSS SECTION ==================== */
+        .gauss-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 0;
+            background: radial-gradient(ellipse at 50% 50%, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
+        }
+
+        .gauss-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .gauss-text h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gauss-text p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .gauss-card-section {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+
+        .gauss-card {
+            background: var(--card-bg);
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 300px;
+            width: 100%;
+        }
+
+        .gauss-card:hover {
+            border-color: var(--accent-gold);
+            transform: translateY(-15px);
+            box-shadow: 0 12px 40px rgba(255, 215, 0, 0.2);
+        }
+
+        .gauss-avatar {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--accent-gold), #ffaa00);
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+            flex-shrink: 0;
+        }
+
+        .gauss-name {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--accent-gold);
+        }
+
+        .gauss-contribution {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
         .gauss-visual {
             display: flex;
             flex-direction: column;
@@ -568,6 +663,9 @@
             .number-pairs {
                 grid-template-columns: repeat(3, 1fr);
             }
+            .gauss-content {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 600px) {
@@ -583,6 +681,9 @@
                 padding: 0.9rem 1.8rem;
                 font-size: 0.95rem;
             }
+            .gauss-content {
+                padding: 0 1rem;
+            }
         }
     </style>
 </head>
@@ -595,7 +696,7 @@
         </div>
         <ul class="nav-menu">
             <li><a href="#hero" class="nav-link">LỊCH SỬ</a></li>
-            <li><a href="index.html" class="cta-button">BÀI HỌC TƯƠNG TÁC →</a></li>
+            <li><a href="lesson.html" class="cta-button">BÀI HỌC TƯƠNG TÁC →</a></li>
         </ul>
     </nav>
 
@@ -658,7 +759,7 @@
                     <p>
                         Khoảng thế kỷ 5 TCN, các nhà toán học Hy Lạp bắt đầu đặt ra những quy tắc cụ thể 
                         cho những cấp số này. Tiêu biểu là trường phái <strong>Pythagoras</strong>, 
-                        <strong>Archimedes</strong>, <strong>Hypsicles</strong>, và <strong>Diophantus</strong>.
+                        <strong>Archimedes</strong>, <strong>Hypsicles</strong>, v�� <strong>Diophantus</strong>.
                     </p>
                     <p>
                         Họ không chỉ khám phá ra các tính chất của cấp số, mà còn ứng dụng chúng vào 
@@ -701,65 +802,67 @@
     </section>
 
     <!-- ==================== SECTION 3: CARL FRIEDRICH GAUSS ==================== -->
-    <section class="reveal">
-        <div class="container">
-            <div class="section-content">
-                <div class="section-visual reveal-left">
-                    <div class="visual-card">
-                        <div class="gauss-visual">
-                            <h3 style="color: var(--accent-gold); font-size: 1.5rem; text-align: center;">
-                                Phương Pháp Ghép Cặp của Gauss
-                            </h3>
-                            <div class="number-pairs">
-                                <div class="pair-box">
-                                    <div class="pair-number">1 + 100</div>
-                                    <div class="pair-result">= 101</div>
-                                </div>
-                                <div class="pair-box">
-                                    <div class="pair-number">2 + 99</div>
-                                    <div class="pair-result">= 101</div>
-                                </div>
-                                <div class="pair-box">
-                                    <div class="pair-number">3 + 98</div>
-                                    <div class="pair-result">= 101</div>
-                                </div>
-                                <div class="pair-box">
-                                    <div class="pair-number">...</div>
-                                    <div class="pair-result">...</div>
-                                </div>
-                                <div class="pair-box">
-                                    <div class="pair-number">50 + 51</div>
-                                    <div class="pair-result">= 101</div>
-                                </div>
-                            </div>
-                            <div class="gauss-result">
-                                50 cặp × 101 = <strong>5050</strong>
-                            </div>
+    <section class="gauss-section reveal">
+        <div class="gauss-content">
+            <div class="gauss-text reveal-left">
+                <div class="timeline-badge">Năm 1780s</div>
+                <h2>Vị Thần Đồng Toán Học</h2>
+                <p>
+                    Khi mới chỉ là một cậu bé học sinh tiểu học (khoảng 7-10 tuổi), 
+                    thầy giáo của Gauss đã ra đề bài nhằm phạt cả lớp ngồi yên:
+                </p>
+                <p style="font-style: italic; color: var(--accent-cyan);">
+                    <strong>"Tính tổng các số nguyên liên tiếp từ 1 đến 100."</strong>
+                </p>
+                <p>
+                    Trong khi cả lớp loay hoay với phép cộng dài dòng, Gauss đã tìm ra quy luật 
+                    ghép cặp đối xứng và tính ngay ra kết quả <strong>5050</strong> chỉ trong tích tắc!
+                </p>
+                <p>
+                    Phương pháp này trở thành công thức chuẩn tắc cho tổng cấp số cộng: 
+                    <strong>S<sub>n</sub> = n(a₁ + aₙ)/2</strong>, thay đổi hoàn toàn cách chúng ta 
+                    làm việc với các dãy số.
+                </p>
+
+                <div class="gauss-card-section">
+                    <div class="gauss-card reveal">
+                        <div class="gauss-avatar">G</div>
+                        <div class="gauss-name">Carl Friedrich Gauss</div>
+                        <div class="gauss-contribution">
+                            Phương pháp ghép cặp đối xứng. Công thức tính tổng cấp số cộng. Nền tảng của toán học hiện đại.
                         </div>
                     </div>
                 </div>
-                <div class="section-text reveal-right">
-                    <div class="timeline-badge">Năm 1780s</div>
-                    <h2>Johann Carl Friedrich Gauss</h2>
-                    <h3 style="color: var(--accent-gold); font-size: 1.3rem; margin-bottom: 1rem;">
-                        "Cha Đẻ" của Tổng Cấp Số Cộng
-                    </h3>
-                    <p>
-                        Khi mới chỉ là một cậu bé học sinh tiểu học (khoảng 7-10 tuổi), 
-                        thầy giáo của Gauss đã ra đề bài nhằm phạt cả lớp ngồi yên:
-                    </p>
-                    <p style="font-style: italic; color: var(--accent-cyan);">
-                        <strong>"Tính tổng các số nguyên liên tiếp từ 1 đến 100."</strong>
-                    </p>
-                    <p>
-                        Trong khi cả lớp loay hoay với phép cộng dài dòng, Gauss đã tìm ra quy luật 
-                        ghép cặp đối xứng và tính ngay ra kết quả <strong>5050</strong> chỉ trong tích tắc!
-                    </p>
-                    <p>
-                        Phương pháp này trở thành công thức chuẩn tắc cho tổng cấp số cộng: 
-                        <strong>S<sub>n</sub> = n(a₁ + aₙ)/2</strong>, thay đổi hoàn toàn cách chúng ta 
-                        làm việc với các dãy số.
-                    </p>
+            </div>
+
+            <div class="gauss-visual reveal-right">
+                <h3 style="color: var(--accent-gold); font-size: 1.5rem; text-align: center; width: 100%;">
+                    Phương Pháp Ghép Cặp của Gauss
+                </h3>
+                <div class="number-pairs">
+                    <div class="pair-box">
+                        <div class="pair-number">1 + 100</div>
+                        <div class="pair-result">= 101</div>
+                    </div>
+                    <div class="pair-box">
+                        <div class="pair-number">2 + 99</div>
+                        <div class="pair-result">= 101</div>
+                    </div>
+                    <div class="pair-box">
+                        <div class="pair-number">3 + 98</div>
+                        <div class="pair-result">= 101</div>
+                    </div>
+                    <div class="pair-box">
+                        <div class="pair-number">...</div>
+                        <div class="pair-result">...</div>
+                    </div>
+                    <div class="pair-box">
+                        <div class="pair-number">50 + 51</div>
+                        <div class="pair-result">= 101</div>
+                    </div>
+                </div>
+                <div class="gauss-result">
+                    50 cặp × 101 = <strong>5050</strong>
                 </div>
             </div>
         </div>
