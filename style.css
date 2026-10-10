@@ -16,7 +16,7 @@
     html, body {
       margin: 0;
       width: 100%;
-      height: 100%;
+      height: 100vh;
       overflow: hidden;
     }
     body {
@@ -29,7 +29,17 @@
       font-family: "DM Sans", sans-serif;
     }
     button { font: inherit; }
-    .app-shell { width: min(1600px, 100%); min-height: 100vh; margin: 0 auto; padding: 0 30px 28px; }
+    .app-shell {
+      width: 100%;
+      max-width: 1600px;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      margin: 0 auto;
+      box-sizing: border-box;
+      overflow: hidden;
+      padding: 0 30px 28px;
+    }
     .topbar {
       height: 78px;
       display: flex;
@@ -37,6 +47,7 @@
       justify-content: space-between;
       border-bottom: 1px solid var(--line);
       gap: 20px;
+      flex-shrink: 0;
     }
     .brand, .brand-mark, .top-actions, .chapter-meta, .panel-heading, .panel-title,
     .book-tools, .play-controls, .player-status, .step-heading, .sequence-item,
@@ -80,8 +91,9 @@
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       gap: 18px;
-      min-height: calc(100vh - 162px);
-      height: calc(100vh - 162px);
+      flex: 1;
+      min-height: 0;
+      height: 100%;
       overflow: hidden;
     }
     .panel {
@@ -91,12 +103,17 @@
       border-radius: var(--radius);
       background: linear-gradient(145deg, rgba(20, 29, 40, .96), rgba(15, 22, 31, .97));
       box-shadow: 0 20px 55px rgba(0, 0, 0, .13);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-height: 0;
     }
     .panel-heading {
       min-height: 59px;
       justify-content: space-between;
       padding: 0 19px;
       border-bottom: 1px solid var(--line);
+      flex-shrink: 0;
     }
     .panel-title { gap: 10px; font: 700 12px "Manrope", sans-serif; }
     .panel-icon { color: var(--cyan); font-size: 15px; }
@@ -115,13 +132,30 @@
     .tool-button:hover { color: var(--text); border-color: rgba(96, 216, 204, .42); }
     .book-stage {
       position: relative;
-      min-height: 585px;
-      height: calc(100% - 59px);
-      overflow: hidden;
+      flex: 1;
+      min-height: 0;
+      height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
       padding: 22px clamp(20px, 3.2vw, 44px);
       background:
         radial-gradient(ellipse at 48% 43%, rgba(73, 106, 115, .1), transparent 52%),
         #101721;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(96, 216, 204, .35) transparent;
+    }
+    .book-stage::-webkit-scrollbar {
+      width: 7px;
+    }
+    .book-stage::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .book-stage::-webkit-scrollbar-thumb {
+      background: rgba(96, 216, 204, .35);
+      border-radius: 999px;
+    }
+    .book-stage::-webkit-scrollbar-thumb:hover {
+      background: rgba(96, 216, 204, .5);
     }
     .book-page {
       position: relative;
@@ -177,7 +211,7 @@
       box-shadow: 0 0 0 4px rgba(245, 198, 108, .12), 0 0 20px rgba(245,198,108,.26);
       animation: none;
     }
-    .play-marker .marker-number { position: absolute; top: -5px; right: -4px; display: grid; width: 16px; height: 16px; place-items: center; border-radius: 50%; background: #24313c; color: #e8f3f4; font-size: 9px; font-weight: 700; }
+    .play-marker .marker-number { position: absolute; top: -5px; right: -4px; display: grid; width: 16px; height: 16px; place-items: center; border-radius: 50%; background: #24313c; color: #e8f3f4; font-size: 9px; }
     .marker-1 { top: 21%; left: 8%; }
     .marker-2 { top: 49%; right: 7%; }
     .marker-3 { top: 69%; left: 7%; }
@@ -185,9 +219,22 @@
     @keyframes soft-pulse { 0%,100% { box-shadow: 0 5px 15px rgba(0,0,0,.25), 0 0 0 0 rgba(96,216,204,0); } 50% { box-shadow: 0 5px 15px rgba(0,0,0,.25), 0 0 0 5px rgba(96,216,204,.08); } }
     .reader-hint { position: absolute; right: 15px; bottom: 11px; color: #8493a3; font-size: 9px; }
 
-    .playground { display: flex; min-height: 644px; flex-direction: column; }
-    .playground-content { display: flex; flex: 1; flex-direction: column; padding: 22px 23px 16px; }
-    .empty-state { display: flex; flex: 1; min-height: 520px; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+    .playground {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .playground-content {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+      padding: 22px 23px 16px;
+    }
+    .empty-state { display: flex; flex: 1; min-height: 0; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
     .empty-state[hidden] { display: none; }
     .empty-symbol {
       display: grid; width: 92px; height: 92px; place-items: center;
@@ -202,7 +249,7 @@
     .empty-state h2 { margin-bottom: 9px; font: 700 21px "Manrope", sans-serif; letter-spacing: -.04em; }
     .empty-state p { max-width: 300px; margin-bottom: 21px; color: var(--muted); font-size: 12px; line-height: 1.7; }
     .empty-hint { padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px; color: #9aa8b6; font-size: 10px; }
-    .lesson-view { display: none; flex: 1; flex-direction: column; }
+    .lesson-view { display: none; flex: 1; flex-direction: column; min-height: 0; }
     .lesson-view.visible { display: flex; }
     .lesson-eyebrow { gap: 7px; margin: 0 0 8px; color: var(--cyan); font-size: 9px; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; }
     .lesson-title { margin: 0 0 6px; font: 800 clamp(18px, 2vw, 23px) "Manrope", sans-serif; letter-spacing: -.04em; }
@@ -224,7 +271,7 @@
     .sequence-item { min-width: 0; flex: 1; flex-direction: column; gap: 8px; opacity: .28; transform: translateY(8px) scale(.94); transition: opacity .42s ease, transform .42s ease; }
     .sequence-item.revealed { opacity: 1; transform: translateY(0) scale(1); }
     .sequence-item.current .number-box { border-color: rgba(96,216,204,.8); background: rgba(96,216,204,.16); color: #a4fff1; box-shadow: 0 0 22px rgba(96,216,204,.12); }
-    .number-box { display: grid; width: clamp(39px, 5vw, 54px); height: 45px; place-items: center; border: 1px solid rgba(96,216,204,.28); border-radius: 11px; background: rgba(96,216,204,.075); color: #dff6fa; font: 700 17px "Manrope", sans-serif; }
+    .number-box { display: grid; width: clamp(39px, 5vw, 54px); height: 45px; place-items: center; border: 1px solid rgba(96,216,204,.28); border-radius: 11px; background: rgba(96,216,204,.075); color: #b3d9d3; font-size: 13px; font-weight: 600; }
     .term-label { color: #7d8b9a; font-size: 9px; }
     .sequence-arrow { flex: 0 1 37px; min-width: 12px; margin-top: -14px; color: var(--amber); text-align: center; opacity: 0; transition: opacity .3s; }
     .sequence-arrow.visible { opacity: .9; }
@@ -295,6 +342,7 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      min-height: 0;
     }
     .panel.playground .playground-content {
       flex: 1;
