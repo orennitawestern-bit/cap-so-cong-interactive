@@ -551,3 +551,53 @@ h1 { margin-bottom: 0; font: 800 clamp(20px, 2vw, 26px) "Manrope", sans-serif; l
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+//Bổ sung
+.submit-box {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px dashed #d5cfbf;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.btn-submit-book {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-family: "Manrope", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  background: #e6e0d2;
+  color: #324744;
+  border: 1px solid #c9c0ac;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+  user-select: none;
+}
+.btn-submit-book .upload-icon {
+  font-size: 13px;
+  font-weight: bold;
+  color: #48736d;
+}
+.btn-submit-book:hover {
+  background: #3c5450;                  
+  color: #f7f5ee;                       
+  border-color: #3c5450;
+  box-shadow: 0 4px 10px rgba(60, 84, 80, 0.18);
+  transform: translateY(-1px);
+}
+#file-chosen {
+  font-family: "DM Sans", sans-serif;
+  font-size: 11px;
+  font-style: italic;
+  color: #828c8a;
+  max-width: 220px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
