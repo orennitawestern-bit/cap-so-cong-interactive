@@ -62,6 +62,38 @@ button { font: inherit; }
 .brand-name { font: 800 14px "Manrope", sans-serif; letter-spacing: .02em; }
 .brand-sub { margin-top: 2px; color: var(--muted); font-size: 11px; }
 .top-actions { gap: 11px; }
+.nav-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  color: #eaf2ff;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(132, 145, 163, 0.28);
+  transition: all 0.2s ease;
+}
+
+.nav-back-link .back-arrow {
+  color: var(--amber);
+  font-size: 13px;
+  transition: transform 0.2s ease;
+}
+
+.nav-back-link:hover {
+  color: var(--cyan);
+  border-color: rgba(99, 217, 207, 0.45);
+  background: rgba(99, 217, 207, 0.12);
+  transform: translateY(-1px);
+}
+
+.nav-back-link:hover .back-arrow {
+  transform: translateX(-3px);
+}
 .top-chip {
   padding: 8px 12px;
   background: transparent;
@@ -407,6 +439,11 @@ h1 { margin-bottom: 0; font: 800 clamp(20px, 2vw, 26px) "Manrope", sans-serif; l
   .app-shell { padding: 0 12px 18px; }
   .topbar { height: 65px; }
   .top-chip { display: none; }
+  .nav-back-link { 
+    display: inline-flex;
+    padding: 6px 11px;
+    font-size: 10px;
+  }
   .chapter-meta { padding: 18px 2px 14px; }
   .chapter-note { font-size: 10px; }
   .lesson-tag { padding: 7px 9px; font-size: 9px; }
