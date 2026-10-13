@@ -113,12 +113,12 @@
                 3/ $u_n = \dfrac{n - 1}{2n + 1}$<br><br>
                 4/ $u_n = (-1)^n + 3n$
               </div>
-              <div class="submit-box" style="margin-top: 15px; padding-top: 15px; border-top: 1px dashed #ccc;">
-                <label for="file-upload" class="custom-file-upload" style="display: inline-block; padding: 6px 14px; background-color: #2563eb; color: #fff; border-radius: 6px; cursor: pointer; font-weight: 500; font-size: 14px;">
-                  NỘP BÀI
-                </label>
-                <input id="file-upload" type="file" style="display: none;" accept="image/*,.pdf" onchange="showFileName(this)">
-                <span id="file-chosen" style="margin-left: 8px; font-style: italic; color: #555;">Chưa có file nào được chọn</span>
+              <div class="submit-box">
+                  <input id="file-upload" type="file" style="display: none;" accept="image/*,.pdf" onchange="showFileName(this)">
+                  <label for="file-upload" class="btn-submit-book">
+                    <span class="upload-icon">↑</span> NỘP BÀI
+                  </label>
+                  <span id="file-chosen">Chưa có file nào được chọn</span>
               </div>
             </div>
             
