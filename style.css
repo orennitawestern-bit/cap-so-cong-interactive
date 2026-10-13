@@ -592,7 +592,7 @@ h1 { margin-bottom: 0; font: 800 clamp(20px, 2vw, 26px) "Manrope", sans-serif; l
   transform: translateY(-1px);
 }
 #file-chosen {
-  font-family: "DM Sans", sans-serif;
+  font-family: "Manrope", sans-serif;
   font-size: 11px;
   font-style: italic;
   color: #828c8a;
